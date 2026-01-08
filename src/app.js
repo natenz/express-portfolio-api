@@ -5,12 +5,12 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*", // sementara
-    methods: ["GET"],
+    origin: "*",
+    methods: ["GET", "OPTIONS"], // tambahin OPTIONS
   })
 );
-
 // middleware
+app.options("*", cors());
 app.use(express.json());
 
 // routes
@@ -29,11 +29,16 @@ app.use("/certifications", certificationRoute);
 app.use(errorHandler);
 
 // health check
+console.log("Health check endpoint registered at /");
 app.get("/", (req, res) => {
   res.json({
     status: "OK",
     message: "Portfolio API is running 🚀",
   });
+});
+app.use((req, res, next) => {
+  console.log(req.method, req.url);
+  next();
 });
 
 module.exports = app;
