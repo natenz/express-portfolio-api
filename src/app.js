@@ -1,11 +1,11 @@
 const express = require("express");
 const errorHandler = require("./middleware/error.middleware");
+const cors = require("cors");
 const app = express();
-import cors from "cors";
 
 app.use(
   cors({
-    origin: "*", // sementara, aman buat portfolio
+    origin: "*", // sementara
     methods: ["GET"],
   })
 );
